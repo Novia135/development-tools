@@ -1,37 +1,30 @@
 # Contributing
 
-Thanks for considering a contribution.
+Thank you for considering a contribution.
 
-## Ways to help
+## Before opening an issue
 
-- Report a reproducible bug.
-- Improve an explanation or example.
-- Propose a small utility with a clear use case.
-- Add tests for an existing behavior.
-- Improve compatibility notes.
+Search existing issues for duplicates. Describe the real problem, expected behavior, a minimal reproduction, operating system, and relevant runtime versions.
 
-## Before opening a pull request
+## Development setup
 
-1. Search existing issues and source to avoid duplicate work.
-2. Keep changes focused and explain the problem they solve.
-3. Add or update tests for changed behavior.
-4. Update documentation and CHANGELOG.md when appropriate.
-5. Test in Roblox Studio when possible and state the exact verification performed.
+Python 3.10+ is required for the cross-platform CLI. The current Python tools use only the standard library.
 
-## Code guidelines
+Run tests from the repository root:
 
-- Use idiomatic, readable Luau.
-- Avoid unnecessary dependencies.
-- Prefer small functions with clear inputs and outputs.
-- Document edge cases and error behavior.
-- Do not add secrets, proprietary code, telemetry, or hidden network behavior.
+```sh
+python -m unittest discover -s tests/python -v
+```
 
-## Pull request description
+## Pull requests
 
-Include:
-- What changed and why.
-- Any API changes.
-- Tests run and their results.
-- Any known limitations or unverified behavior.
+- Keep changes focused and explain the user need.
+- Add tests for bug fixes and new behavior.
+- Update README or docs when commands or behavior change.
+- Explain any proposed third-party dependency.
+- Do not include generated files, secrets, credentials, private project code, or unrelated formatting changes.
+- State which checks you ran and include their actual results.
 
-Contributions are reviewed on their merits; submitting a pull request does not guarantee acceptance.
+For Luau changes, state the runtime assumptions and whether tests were run in Studio. Do not claim Studio validation if it was not performed.
+
+Prefer maintainability, predictable behavior, and honest documentation over activity metrics or feature count.

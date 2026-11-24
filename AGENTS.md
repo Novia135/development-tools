@@ -1,43 +1,42 @@
 # Instructions for coding agents
 
-These instructions apply to the entire repository.
+This is a small, cross-platform developer-tools project. Read this file and relevant documentation before changing code.
 
-## Project purpose
+## Project boundaries
 
-Maintain a small, readable collection of reusable Roblox Luau utilities. The project is early-stage. Do not describe it as widely adopted, production-proven, audited, or benchmarked unless verifiable evidence is added.
+- General-purpose Python CLI: devtools/
+- Python tests: tests/python/
+- Optional Roblox Luau modules: src/
+- Luau Studio-oriented test script: tests/RunTests.server.lua
+- Do not describe the repository as Roblox-only.
+- Do not claim features, test results, compatibility, users, downloads, or adoption that have not been verified.
 
-## Before changing code
+## Before editing
 
-1. Read this file and the repository README.
-2. Inspect the relevant module, tests, and examples before editing.
-3. Preserve existing public API behavior unless the task explicitly requests a breaking change.
-4. Check Roblox Luau semantics rather than assuming stock Lua behavior.
+1. Inspect relevant source, tests, README, and project status.
+2. Identify the user problem addressed by the change.
+3. Check for existing helpers before adding another.
+4. Keep changes focused and explain trade-offs.
+5. Never overwrite unrelated user work.
 
 ## Implementation standards
 
-- Write clear, idiomatic Luau.
-- Keep modules focused and dependency-free unless a dependency is justified and documented.
-- Validate public inputs where doing so prevents confusing failures.
-- Use descriptive names and document non-obvious behavior.
-- Avoid unnecessary abstractions, global state, networking, DataStore access, or side effects in utility modules.
-- Never include credentials, tokens, private player information, or proprietary game code.
-- Do not add telemetry, hidden network calls, obfuscated code, or executable installation steps.
+- Prefer small functions and standard-library dependencies.
+- Preserve cross-platform behavior on Windows, macOS, and Linux.
+- Keep inspection commands read-only; never execute files being inspected.
+- Do not add telemetry, network calls, destructive operations, or credential access without explicit discussion and approval.
+- Handle filesystem errors and undecodable files deliberately.
+- Add tests for new behavior and edge cases.
+- Document machine-readable output and compatibility assumptions.
 
-## Tests and verification
+## Validation and reporting
 
-- Add or update tests for every behavior change.
-- Include normal cases and relevant edge cases.
-- Do not claim tests passed unless they were actually run in a Roblox Luau runtime.
-- If Studio execution is unavailable, state that tests were not run and provide exact manual verification steps.
-- Keep examples aligned with the actual exported API.
+- Run relevant tests when an execution environment is available.
+- If tests cannot be run, say so; never report them as passing.
+- Distinguish implemented behavior from planned work.
+- Update documentation and CHANGELOG.md for user-visible changes.
+- Never fabricate benchmarks, security audits, users, contributors, downloads, dependent repositories, or release history.
 
-## Documentation and releases
+## Security
 
-- Update README or module documentation when public behavior changes.
-- Record user-visible changes in CHANGELOG.md.
-- Mark breaking changes clearly.
-- Do not invent downloads, dependent repositories, usage statistics, contributors, benchmarks, endorsements, or compatibility guarantees.
-
-## Scope
-
-Do not modify Roblox experiences or Studio projects as part of repository-only tasks. Work only on files in this GitHub repository unless the user explicitly requests otherwise.
+Never commit secrets, tokens, credentials, private source code, or personal data. Treat scanned files as untrusted input. Follow SECURITY.md for vulnerability reports.

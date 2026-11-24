@@ -1,68 +1,64 @@
-# Roblox Development Tools
+# Development Tools
 
-A small, openly developed collection of reusable Luau utilities for Roblox experiences.
+A small, cross-platform collection of practical utilities for software development.
 
-> **Project status:** Early development. APIs may change, and modules should be reviewed and tested in your own experience before production use. This repository does not claim production adoption or independent security review.
+> **Status:** Early development. Interfaces may change. The Python CLI is the current cross-platform focus; the existing Luau helpers remain an optional language-specific component.
 
-## Goals
+## Current features
 
-- Provide focused utilities that are easy to read and adapt.
-- Keep modules dependency-free and compatible with Roblox Luau.
-- Document behavior, edge cases, and examples.
-- Prefer explicit APIs over hidden global state.
+### Python command-line tools
 
-## Contents
+Requires Python 3.10+ and has no third-party runtime dependencies.
 
-| Path | Description |
-| --- | --- |
-| `src/TableUtils.lua` | Copying and table inspection helpers |
-| `src/StringUtils.lua` | String trimming and splitting helpers |
-| `src/NumberUtils.lua` | Numeric validation and mapping helpers |
-| `tests/RunTests.server.lua` | Simple in-experience assertion-based test runner |
-| `examples/Usage.server.lua` | Example usage from a server Script |
-
-## Installation
-
-1. Review the source files in `src/`.
-2. Copy the modules you need into `ServerScriptService`, `ReplicatedStorage`, or another suitable location.
-3. Require the ModuleScript from a Script or LocalScript as appropriate.
-4. Review each module's comments and test it in Studio before relying on it.
-
-These files are plain Luau source. They are not a Roblox model or plugin package.
-
-## Quick example
-
-```lua
-local NumberUtils = require(path.to.NumberUtils)
-local TableUtils = require(path.to.TableUtils)
-
-local chance = NumberUtils.clamp(1.4, 0, 1)
-local settings = TableUtils.deepCopy({
-    audio = { volume = 0.7 },
-})
-
-print(chance) -- 1
-print(settings.audio.volume) -- 0.7
+```sh
+python -m devtools --help
+python -m devtools scan .
+python -m devtools stats .
+python -m unittest discover -s tests/python -v
 ```
 
-Replace `path.to` with the actual ModuleScript location in your experience.
+- **scan** finds TODO, FIXME, and XXX markers in UTF-8 text files.
+- **stats** counts readable text files and lines grouped by file extension.
+- Both commands are read-only, support JSON output, and skip common generated and dependency directories by default.
 
-## Testing
+### Optional Roblox Luau helpers
 
-Place `tests/RunTests.server.lua` in a server Script and update its `require` paths to match where you placed the modules. Run the experience in Studio and check the Output window. The test runner uses built-in assertions and has no external test-framework dependency.
+The src directory contains table, string, and numeric helper modules. They are independent of the Python CLI and require a Luau-compatible runtime for validation.
 
-## Compatibility
+## Install and use
 
-The modules target Roblox Luau and use standard Luau/Roblox runtime behavior. They are not intended to run unchanged in stock Lua interpreters. Check the source for any runtime-specific assumptions.
+```sh
+git clone https://github.com/Novia135/development-tools.git
+cd development-tools
+python -m devtools --help
+```
 
-## Contributing
+No installation is required when running from the repository root. A packaged command may be added after the interface stabilizes.
 
-Bug reports, documentation improvements, and focused utility proposals are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+## Commands
 
-## Security
+```sh
+python -m devtools scan PATH [--include-hidden] [--json]
+python -m devtools stats PATH [--include-hidden] [--json]
+```
 
-Do not put secrets, API keys, private game code, player data, or credentials in this repository. See [SECURITY.md](SECURITY.md).
+The scanner reports relative file paths, line numbers, marker types, and matching lines. Statistics are approximate text-based counts, not language-aware complexity metrics. Binary or unreadable files are skipped.
 
-## License
+## Layout
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE).
+- devtools/ — cross-platform Python CLI
+- tests/python/ — Python unit tests
+- src/ — optional Roblox Luau modules
+- tests/RunTests.server.lua — Studio-oriented Luau test script
+- examples/ — usage examples
+- docs/ — architecture and project status
+
+## Design and privacy
+
+The Python CLI runs locally. It does not upload source code, collect telemetry, make network requests, or execute files it scans. Avoid scanning large generated directories or directories containing secrets if output will be shared.
+
+See CONTRIBUTING.md and SECURITY.md. The project is MIT licensed; see LICENSE.
+
+## Project status
+
+See docs/PROJECT_STATUS.md for implemented features, known limitations, and proposed next steps. No external adoption, download counts, dependent-project counts, security audit, or versioned release is claimed.
